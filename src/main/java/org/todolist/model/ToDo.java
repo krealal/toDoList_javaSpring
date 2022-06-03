@@ -15,6 +15,13 @@ public class ToDo {
         return id;
     }
 
+    public ToDo(String id, String toDo, String description, boolean isDone) {
+        this.id = id;
+        this.toDo = toDo;
+        this.description = description;
+        this.isDone = isDone;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
