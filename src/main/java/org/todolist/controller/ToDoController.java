@@ -3,10 +3,7 @@ package org.todolist.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.todolist.model.ToDo;
 import org.todolist.repository.ToDoRepository;
 
@@ -41,8 +38,8 @@ public class ToDoController {
         }
     }
 
-
-public ResponseEntity<ToDo> createToDo(@RequestParam ToDo toDo){
+    @PostMapping("/new")
+    public ResponseEntity<ToDo> createToDo(@RequestParam ToDo toDo){
     try {
         ToDo _toDo = toDoRepository.save(new ToDo(toDo.getToDo(), toDo.getDescription(), false));
         return new ResponseEntity<>(_toDo, HttpStatus.CREATED);
@@ -50,4 +47,15 @@ public ResponseEntity<ToDo> createToDo(@RequestParam ToDo toDo){
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus>deleteToDo(@PathVariable("id") String id){
+        try {
+            toDoRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
