@@ -42,5 +42,12 @@ public class ToDoController {
     }
 
 
-
+public ResponseEntity<ToDo> createToDo(@RequestParam ToDo toDo){
+    try {
+        ToDo _toDo = toDoRepository.save(new ToDo(toDo.getToDo(), toDo.getDescription(), false));
+        return new ResponseEntity<>(_toDo, HttpStatus.CREATED);
+    } catch (Exception e) {
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
 }

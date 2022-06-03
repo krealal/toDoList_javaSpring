@@ -15,10 +15,9 @@ public class ToDo {
         return id;
     }
 
-    public ToDo(String id, String toDo, String description, boolean isDone) {
+    public ToDo(String id, String toDo, boolean isDone) {
         this.id = id;
         this.toDo = toDo;
-        this.description = description;
         this.isDone = isDone;
     }
 
