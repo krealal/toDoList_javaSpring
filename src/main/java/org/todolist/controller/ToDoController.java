@@ -9,6 +9,7 @@ import org.todolist.repository.ToDoRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/todo")
@@ -58,4 +59,18 @@ public class ToDoController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ToDo> updateToDo(@PathVariable("id") String id,@RequestBody ToDo toDo ){
+        Optional<ToDo>toDoData = toDoRepository.findById(id);
+
+        if (toDoData.isPresent()) {
+            ToDo _toDo = toDoData.get();
+            _toDo.setDescription(toDo.getDescription());
+            _toDo.setToDo(toDo.getToDo());
+            _toDo.setDone(toDo.isDone());
+            return new ResponseEntity<>(toDoRepository.save(_toDo), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
